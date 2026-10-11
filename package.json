@@ -37,6 +37,8 @@
     ]
   },
   "devDependencies": {
-    "query-string": "^9.5.1"
+    "classnames": "^2.5.1",
+    "query-string": "^9.5.1",
+    "sass": "^1.105.1"
   }
 }
