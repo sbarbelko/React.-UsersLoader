@@ -1,8 +1,8 @@
-import logo from "./logo.svg";
 import "./App.css";
+import UsersLoader from "./Components/UsersLoader";
 
 function App() {
-  return <>hello</>;
+  return <UsersLoader />;
 }
 
 export default App;
