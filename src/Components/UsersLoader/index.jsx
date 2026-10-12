@@ -11,14 +11,15 @@ class UsersLoader extends Component {
       isFetching: false,
       error: null,
       currentPage: 1,
+      cards: 5,
     };
   }
 
   loadUsers = () => {
-    const { currentPage } = this.state;
+    const { currentPage, cards } = this.state;
 
     this.setState({ isFetching: true });
-    getUsers({ page: currentPage, results: 5 })
+    getUsers({ page: currentPage, results: cards })
       .then((data) => this.setState({ users: data.results }))
       .catch((e) => this.setState({ error: e }))
       .finally(() => this.setState({ isFetching: false }));
@@ -29,9 +30,13 @@ class UsersLoader extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { currentPage } = this.state;
+    const { currentPage, cards } = this.state;
 
     if (currentPage !== prevState.currentPage) {
+      this.loadUsers();
+    }
+
+    if (cards !== prevState.cards) {
       this.loadUsers();
     }
   }
@@ -48,6 +53,10 @@ class UsersLoader extends Component {
     this.setState({ currentPage: currentPage + 1 });
   };
 
+  cardsHandler = (e) => {
+    this.setState({ cards: e.target.value });
+  };
+
   render() {
     const { users, isFetching, error } = this.state;
 
@@ -57,11 +66,25 @@ class UsersLoader extends Component {
         {isFetching && <div>Loading. Please waite...</div>}
         {!error && !isFetching && (
           <>
+            <form>
+              <label>
+                <span>Cards count</span>
+                <select
+                  value={this.state.cards}
+                  onChange={this.cardsHandler}
+                  name="pages"
+                >
+                  <option value={1}>1</option>
+                  <option value={5}>5</option>
+                  <option value={10}>10</option>
+                </select>
+              </label>
+            </form>
+
             <button onClick={this.prevPage}>{"<"}</button>
             <button onClick={this.nextPage}>{">"}</button>
             <ul>
               {users.map((u) => (
-                // <li key={u.login.uuid}>{JSON.stringify(u)}</li>
                 <Users key={u.login.uuid} users={u} />
               ))}
             </ul>

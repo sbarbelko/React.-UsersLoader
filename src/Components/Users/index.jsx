@@ -4,7 +4,6 @@ import styles from "./Users.module.sass";
 
 export default function Users(props) {
   const { users } = props;
-  console.log("users", users);
   return (
     <li
       className={classNames(
