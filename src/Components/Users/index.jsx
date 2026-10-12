@@ -4,6 +4,7 @@ import styles from "./Users.module.sass";
 
 export default function Users(props) {
   const { users } = props;
+  const country = users.nat;
   return (
     <li
       className={classNames(
@@ -12,7 +13,11 @@ export default function Users(props) {
         { [styles.female]: users.gender === "female" },
       )}
     >
-      <img src={users.picture.large} alt="profile" />
+      <img className={styles.profile} src={users.picture.large} alt="profile" />
+      <img
+        src={`https://flagcdn.com/16x12/${country.toLowerCase()}.png`}
+        alt="users country"
+      />
       <h1>
         {users.name.first} {users.name.last}
       </h1>
