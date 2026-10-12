@@ -1,6 +1,7 @@
 import { Component } from "react";
 import getUsers from "../api";
 import Users from "../Users";
+import styles from "./UserLoader.module.sass";
 
 class UsersLoader extends Component {
   constructor(props) {
@@ -99,7 +100,7 @@ class UsersLoader extends Component {
         {isFetching && <div>Loading. Please waite...</div>}
         {!error && !isFetching && (
           <>
-            <form>
+            <form className={styles.cardForm}>
               <label>
                 <span>Cards count</span>
                 <select
@@ -134,10 +135,15 @@ class UsersLoader extends Component {
                 />
                 <span>Phone</span>
               </label>
+
+              <button type="button" onClick={this.prevPage}>
+                {"<"}
+              </button>
+              <button type="button" onClick={this.nextPage}>
+                {">"}
+              </button>
             </form>
 
-            <button onClick={this.prevPage}>{"<"}</button>
-            <button onClick={this.nextPage}>{">"}</button>
             <ul>
               {users.map((u) => (
                 <Users key={u.login.uuid} users={u} />
