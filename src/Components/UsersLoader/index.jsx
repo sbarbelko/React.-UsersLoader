@@ -13,14 +13,20 @@ class UsersLoader extends Component {
       currentPage: 1,
       cards: 5,
       gender: "all",
+      inc: ["name", "email", "login", "picture", "gender", "nat"],
     };
   }
 
   loadUsers = () => {
-    const { currentPage, cards, gender } = this.state;
+    const { currentPage, cards, gender, inc } = this.state;
 
     this.setState({ isFetching: true });
-    getUsers({ page: currentPage, results: cards, gender: gender })
+    getUsers({
+      page: currentPage,
+      results: cards,
+      gender: gender,
+      inc: inc,
+    })
       .then((data) => this.setState({ users: data.results }))
       .catch((e) => this.setState({ error: e }))
       .finally(() => this.setState({ isFetching: false }));
@@ -31,7 +37,7 @@ class UsersLoader extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { currentPage, cards, gender } = this.state;
+    const { currentPage, cards, gender, inc } = this.state;
 
     if (currentPage !== prevState.currentPage) {
       this.loadUsers();
@@ -42,6 +48,10 @@ class UsersLoader extends Component {
     }
 
     if (gender !== prevState.gender) {
+      this.loadUsers();
+    }
+
+    if (inc !== prevState.inc) {
       this.loadUsers();
     }
   }
@@ -65,8 +75,23 @@ class UsersLoader extends Component {
     this.setState({ gender: e.target.value });
   };
 
+  handleCheckboxChange = (e) => {
+    const { inc } = this.state;
+    const newInc = [...inc];
+    const phone = "phone";
+    newInc.push(phone);
+    e.target.checked
+      ? this.setState({
+          inc: newInc,
+        })
+      : this.setState({
+          inc: newInc.filter((i) => i !== "phone"),
+        });
+  };
+
   render() {
     const { users, isFetching, error } = this.state;
+    console.log("users", users);
 
     return (
       <>
@@ -99,6 +124,15 @@ class UsersLoader extends Component {
                   <option value="male">male</option>
                   <option value="female">female</option>
                 </select>
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  name="phone"
+                  checked={this.state.inc.includes("phone")}
+                  onChange={this.handleCheckboxChange}
+                />
+                <span>Phone</span>
               </label>
             </form>
 
