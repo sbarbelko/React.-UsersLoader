@@ -5,7 +5,7 @@ function getUsers(options) {
   const defaultOptions = {
     page: 1,
     results: CONFIGS.RESULTS_COUNT,
-    seed: CONFIGS.RESULTS_ORDER,
+    // seed: CONFIGS.RESULTS_ORDER,
     inc: CONFIGS.INCLUDUNG_RESULTS,
   };
 
