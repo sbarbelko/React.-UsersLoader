@@ -40,19 +40,12 @@ class UsersLoader extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { currentPage, cards, gender, inc } = this.state;
 
-    if (currentPage !== prevState.currentPage) {
-      this.loadUsers();
-    }
-
-    if (cards !== prevState.cards) {
-      this.loadUsers();
-    }
-
-    if (gender !== prevState.gender) {
-      this.loadUsers();
-    }
-
-    if (inc !== prevState.inc) {
+    if (
+      currentPage !== prevState.currentPage ||
+      cards !== prevState.cards ||
+      gender !== prevState.gender ||
+      inc !== prevState.inc
+    ) {
       this.loadUsers();
     }
   }
